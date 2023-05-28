@@ -4,17 +4,20 @@
 [ext_resource type="Texture2D" uid="uid://d3lwkn8iy118m" path="res://assets/textures/player_ship.png" id="2_d73ya"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h0k1h"]
-radius = 16.0
 height = 90.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_3upgs")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = -1.5708
+rotation = 1.5708
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_d73ya")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(12, -5)
 shape = SubResource("CapsuleShape2D_h0k1h")
+
+[node name="RocketContainer" type="Node" parent="."]
