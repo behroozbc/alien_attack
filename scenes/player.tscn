@@ -1,7 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8672y0hur6x3"]
+[gd_scene load_steps=10 format=3 uid="uid://c8672y0hur6x3"]
 
 [ext_resource type="Script" path="res://scripts/Player.cs" id="1_3upgs"]
 [ext_resource type="Texture2D" uid="uid://d3lwkn8iy118m" path="res://assets/textures/player_ship.png" id="2_d73ya"]
+[ext_resource type="AudioStream" uid="uid://clsj0d0hj21s4" path="res://assets/audio/sfx_laser2.wav" id="3_4qmgj"]
+
+[sub_resource type="Gradient" id="Gradient_120xk"]
+offsets = PackedFloat32Array(0, 0.486486, 1)
+colors = PackedColorArray(1, 0.815686, 0, 0.0784314, 1, 0, 0, 0.811765, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_27g8n"]
+gradient = SubResource("Gradient_120xk")
+
+[sub_resource type="Curve" id="Curve_tayiy"]
+_data = [Vector2(0.0223464, 0.863636), 0.0, 0.0, 0, 0, Vector2(0.966481, 0.372727), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_51o0v"]
+curve = SubResource("Curve_tayiy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r7a6q"]
+lifetime_randomness = 0.3
+emission_shape = 3
+emission_box_extents = Vector3(1, 15, 1)
+particle_flag_disable_z = true
+spread = 21.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = -200.0
+initial_velocity_max = -200.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 10.0
+scale_curve = SubResource("CurveTexture_51o0v")
+color_ramp = SubResource("GradientTexture1D_27g8n")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h0k1h"]
 height = 90.0
@@ -10,6 +40,12 @@ height = 90.0
 collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_3upgs")
+
+[node name="FlameParticleEffect" type="GPUParticles2D" parent="."]
+position = Vector2(-36, -1)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_r7a6q")
+lifetime = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -21,3 +57,6 @@ position = Vector2(12, -5)
 shape = SubResource("CapsuleShape2D_h0k1h")
 
 [node name="RocketContainer" type="Node" parent="."]
+
+[node name="RocketShoted" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_4qmgj")

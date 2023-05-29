@@ -10,14 +10,17 @@ public partial class Player : CharacterBody2D
     public Player()
     {
         rocket_scene = GD.Load<PackedScene>("res://scenes/rocket.tscn");
+        
     }
     const float SPEED = 400;
     private PackedScene rocket_scene;
+    private AudioStreamPlayer _rocketShot;
     private Node rocketContainer;
 
     public override void _Ready()
     {
         rocketContainer = GetNode<Node>("RocketContainer");
+        _rocketShot = GetNode<AudioStreamPlayer>("RocketShoted");
         base._Ready();
     }
     public override void _PhysicsProcess(double delta)
@@ -40,6 +43,7 @@ public partial class Player : CharacterBody2D
 
         rocketContainer.AddChild(rocket_instance);
         rocket_instance.GlobalPosition = new(GlobalPosition.X+50, GlobalPosition.Y);
+        _rocketShot.Play();
     }
     public void TakeDamage()
     {
